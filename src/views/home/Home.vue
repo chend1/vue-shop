@@ -26,7 +26,8 @@ export default {
   },
   data(){
     return {
-      banners: []
+      banners: [],
+      recommend: []
     }
   },
   created(){
@@ -34,9 +35,8 @@ export default {
       url: '/home/multidata'
     })
     .then( res => {
-      console.log(res);
       this.banners = res.data.data.banner;
-      console.log(this.banners)
+      console.log(res.data)
     })
     .catch( err => {
       console.log(err);
