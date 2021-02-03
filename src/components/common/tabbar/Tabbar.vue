@@ -21,6 +21,7 @@ export default {
     display: flex;
     position: fixed;
     height: 49px;
+    z-index: 999;
     left: 0;
     right: 0;
     bottom: 0;

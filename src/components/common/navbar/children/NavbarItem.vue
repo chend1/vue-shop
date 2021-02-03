@@ -18,7 +18,7 @@ export default {
   props:{
     navBgc:{
       type: String,
-      default: 'pink'
+      default: '#fff'
     }
   },
   data(){
@@ -43,5 +43,12 @@ export default {
   .navbar-item .center{
     flex: 1;
     text-align: center;
+  }
+  .navbar-item .center .title{
+    color: #333;
+    font-family: '微软雅黑';
+    letter-spacing: 5px;
+    font-weight: 500;
+    font-size: 18px;
   }
 </style>
