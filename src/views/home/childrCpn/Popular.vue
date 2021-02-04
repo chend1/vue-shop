@@ -1,6 +1,6 @@
 <template>
   <div class="popular">
-    <img src="~assets/img/recommend_bg.jpg" alt="">
+    <img src="~assets/img/recommend_bg.jpg" alt="" @load="popImgLoad">
   </div>
 </template>
 
@@ -10,6 +10,11 @@ export default {
   data(){
     return {  
 
+    }
+  },
+  methods: {
+    popImgLoad(){
+      this.$emit('popImgLoad')
     }
   }
 }

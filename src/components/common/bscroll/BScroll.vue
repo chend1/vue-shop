@@ -15,20 +15,21 @@ export default {
       scroll: null
     }
   },
-  props:{
+  props: {
     pullUpLoad: {
       type: Boolean,
-      default: true
+      default: false
     },
     scrollbar: {
       type: Boolean,
-      default: true
+      default: false
     },
   },
-  mounted(){
+  mounted() {
     this.scroll = new BScroll(this.$refs.wrapper,{
       pullUpLoad: this.pullUpLoad,
       scrollbar: this.scrollbar,
+      click: true
       // pullDownRefresh: true,
     }),
     this.scroll.on('scroll', (position) => {
@@ -42,14 +43,18 @@ export default {
         this.scroll.finishPullUp();
       },2000)
     })
+  },
+  methods: {
+    refresh(){
+      this.scroll && this.scroll.refresh()
+    },
+    scrollTo(x, y, time=500){
+      this.scroll && this.scroll.scrollTo(x, y, time)
+    },
   }
 }
 </script>
 
 <style scoped>
-.wrapper{
-  height: calc(100% - 42px);
-  overflow: hidden;
-  background-color: yellow;
-}
+
 </style>

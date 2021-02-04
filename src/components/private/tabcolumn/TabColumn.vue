@@ -38,9 +38,6 @@ export default {
 <style scoped>
 .tabcolumn{
   display: flex;
-  position: sticky;
-  top: 44px;
-  left: 0;
   background-color: #fff;
 }
 </style>

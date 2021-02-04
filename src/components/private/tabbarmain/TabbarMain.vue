@@ -9,7 +9,7 @@
       <TabbarItem path='/order' activeColor='#61b9fb'>
         <img src="~assets/img/order.png" alt="" slot="tabbar-img">
         <img src="~assets/img/order-active.png" alt="" slot="tabbar-active-img">
-        <div slot="tabbar-title">订单</div>
+        <div slot="tabbar-title">分类</div>
       </TabbarItem>
       <TabbarItem path='/cart' activeColor='#61b9fb'>
         <img src="~assets/img/cart.png" alt="" slot="tabbar-img">

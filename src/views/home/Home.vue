@@ -2,22 +2,23 @@
   <div id="home">
     <!-- 导航栏 -->
     <Navbar>
-      <NavbarItem navBgc="pink">
+      <NavbarItem navBgc="pink" class="home-nav">
         <div class="title" slot="center">购物街</div>
       </NavbarItem>
     </Navbar>
-    <!-- <BScroll > -->
+    <TabColumn :filter="filter" @tabClick="tabClick" v-show="isShow" class="tabColumn" ref="tabColumn1"></TabColumn>
+    <BScroll :pullUpLoad=true :scrollbar=true ref="scroll" @scroll="onScroll" @pullingUp="pullingUp">
       <!-- 轮播图 -->
-    <HomeSwiper :lists="banners.list"></HomeSwiper>
-    <!-- 推荐 -->
-    <HomeRecommend :recommendList="recommend"></HomeRecommend>
-    <!-- 流行 -->
-    <Popular></Popular>
-    <!-- 切换栏目 -->
-    <TabColumn :filter="filter" @tabClick="tabClick"></TabColumn>
-    <!-- 数据展示 -->
-    <Goods :goods="goods[goodsIdx].list"></Goods>
-    <!-- </BScroll> -->
+      <HomeSwiper :lists="banners.list" @swiperImgLoad="swiperImgLoad"></HomeSwiper>
+      <!-- 推荐 -->
+      <HomeRecommend :recommendList="recommend"></HomeRecommend>
+      <!-- 流行 -->
+      <Popular @popImgLoad="popImgLoad"></Popular>
+      <!-- 切换栏目 -->
+      <TabColumn :filter="filter" @tabClick="tabClick" ref="tabColumn"></TabColumn>
+      <!-- 数据展示 -->
+      <Goods :goods="goods[goodsIdx].list"></Goods>
+    </BScroll>
   </div> 
 </template>
 
@@ -57,10 +58,22 @@ export default {
       },
       goodsIdx: 'pop',
       tabData: ['pop','new','sell'],
+      isShow: false,
+      tabColumnHeight: 0,
+      itemImgLister: null
     }
   },
+  beforeDestroy() {
+    //取消全局的事件监听
+    this.$bus.$off('imgLoad',this.itemImgLister)
+  },
   mounted(){
-    console.log(this.goods)
+    this.itemImgLister =  () => {
+      if(this.$refs.scroll){
+        this.$refs.scroll.refresh()
+      }
+    }
+    this.$bus.$on('imgLoad',this.itemImgLister)
   },
   created(){
     this.getHomeMulitData()
@@ -86,7 +99,24 @@ export default {
       })
     },
     tabClick(idx){
-      this.goodsIdx = this.tabData[idx]
+      this.goodsIdx = this.tabData[idx];
+      this.$refs.tabColumn.tabIndex = idx;
+      this.$refs.tabColumn1.tabIndex = idx;
+    },
+    // 图片加载完成事件
+    swiperImgLoad(){
+      this.tabColumnHeight = this.$refs.tabColumn.$el.offsetTop;
+    },
+    popImgLoad(){
+      this.tabColumnHeight = this.$refs.tabColumn.$el.offsetTop;
+    },
+    // 滚动事件
+    onScroll(position){
+      this.isShow = -position.y >= this.tabColumnHeight;
+    },
+    // 上拉加载更多
+    pullingUp(){
+      this.getHomeGoods(this.goodsIdx)
     }
   }
 }
@@ -94,17 +124,27 @@ export default {
 
 <style scoped>
 #home{
-  padding-top: 44px;
-  padding-bottom: 49px;
-  /* height: 100vh; */
-  /* box-sizing: border-box; */
+  height: 100vh;
+  box-sizing: border-box;
 }
-.navbar{
+.home-nav{
   position: fixed;
-  z-index: 99;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 9;
 }
-
+.tabColumn{
+  position: relative;
+  top: 44px;
+  z-index: 999;
+}
+.wrapper{
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44px;
+  bottom: 49px;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="goodsItem">
     <div class="img">
-      <img :src="getImg()" alt="" @click="goodsclick">
+      <img :src="getImg()" alt="" @click="goodsclick" @load="imgLoad">
     </div>
     <div class="title">
       <a>
@@ -35,6 +35,14 @@
           return this.goodsList.showLarge.img
         } else{
           return this.goodsList.image
+        }
+      },
+      imgLoad(){
+        if(this.$route.path.indexOf('/home') >=0){
+          this.$bus.$emit('imgLoad')
+        }
+        if(this.$route.path.indexOf('/details') >=0){
+          this.$bus.$emit('detailsImgLoad')
         }
       }
     },
