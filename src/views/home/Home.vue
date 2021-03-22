@@ -34,6 +34,7 @@ import Goods from 'components/private/goods/Goods'
 
 // 请求数据
 import {getHomeMulitData,getHomeGoods} from "network/home";
+import {debounce} from '@/common/untils'
 export default {
   name: 'Home',
   components: {
@@ -68,11 +69,13 @@ export default {
     this.$bus.$off('imgLoad',this.itemImgLister)
   },
   mounted(){
-    this.itemImgLister =  () => {
-      if(this.$refs.scroll){
-        this.$refs.scroll.refresh()
+    this.itemImgLister =  debounce(
+      () => {
+        if(this.$refs.scroll){
+          this.$refs.scroll.refresh()
+        }
       }
-    }
+    )
     this.$bus.$on('imgLoad',this.itemImgLister)
   },
   created(){
@@ -118,7 +121,8 @@ export default {
     pullingUp(){
       this.getHomeGoods(this.goodsIdx)
     }
-  }
+  },
+  
 }
 </script>
 

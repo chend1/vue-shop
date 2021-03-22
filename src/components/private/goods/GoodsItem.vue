@@ -52,10 +52,11 @@
 <style scoped>
 .goodsItem .img{
   height: 270px;
+  overflow: hidden;
+  border-radius: 10px
 }
 .goodsItem .img img{
   width: 100%;
-  border-radius: 10px
 }
 .goodsItem .title{
   line-height: 30px;

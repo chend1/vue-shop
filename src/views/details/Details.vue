@@ -1,5 +1,8 @@
 <template>
   <div class="details">
+    <div class="point" v-show="$store.state.cartPoint">
+      <div>添加成功</div>
+    </div>
     <Navbar class="details-nav">
       <NavbarItem>
         <img src="~assets/img/fanhui.png" alt="" class="img" slot="left" @click="backClick">
@@ -47,6 +50,7 @@ import DetailsBar from 'views/details/childrCpn/DetailsBar'
 
 
 import {getDetails,Goods,Shop,getRecommend} from 'network/details'
+import {debounce} from '@/common/untils'
 export default {
   name: 'Details',
   components: {
@@ -142,11 +146,13 @@ export default {
 
   },
   mounted(){
-    this.itemImgLister =  () => {
-      if(this.$refs.detailsScroll){
-        this.$refs.detailsScroll.refresh()
+    this.itemImgLister =  debounce(
+      () => {
+        if(this.$refs.detailsScroll){
+          this.$refs.detailsScroll.refresh()
+        }
       }
-    }
+    )
     this.$bus.$on('detailsImgLoad',this.itemImgLister)
   },
   beforeDestroy() {
@@ -163,6 +169,18 @@ export default {
     left: 0;
     right: 0;
     z-index: 9;
+  }
+  .point{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 999;
+    line-height: 40px;
+    width: 100px;
+    background-color: pink;
+    text-align: center;
+    border-radius: 10px;
   }
   .content{
     overflow: hidden;

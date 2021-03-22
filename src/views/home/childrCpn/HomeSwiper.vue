@@ -8,7 +8,7 @@
       </SwiperItem>
     </Swiper>
   </div>
-</template>
+</template> 
 
 <script>
 import {Swiper,SwiperItem} from 'components/common/swiper'

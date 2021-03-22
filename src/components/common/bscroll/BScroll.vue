@@ -15,7 +15,7 @@ export default {
       scroll: null
     }
   },
-  props: {
+  props: { 
     pullUpLoad: {
       type: Boolean,
       default: false

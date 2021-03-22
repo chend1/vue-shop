@@ -8,6 +8,8 @@ module.exports = {
         'views': '@/views',
         'network': '@/network',
       }
-    }
-  }
+    },
+    
+  },
+  publicPath: './'
 }

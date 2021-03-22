@@ -16,7 +16,7 @@
 
 
 <script>
-export default{
+export default {
   name: 'tabbar-item',
   props:{
     path: String,

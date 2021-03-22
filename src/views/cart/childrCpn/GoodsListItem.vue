@@ -2,15 +2,16 @@
   <div>
     <div class="goodsList" v-for="item in cartItem" :key="item.iid">
       <div class="select">
-        <input type="checkbox" class="check" :checked="item.checked">
+        <input type="checkbox" class="check" :checked="item.checked" @click="setClick(item.iid)">
       </div>
       <div class="img">
-        <img :src="item.img" alt="">
+        <img :src="item.img" alt="" @load="imgLoad">
       </div>
       <div class="content">
         <div class="title">
           {{item.title}}
         </div>
+        <div class="describe"></div>
         <div class="bottom">
           <div class="price">
             ￥{{item.price}}
@@ -32,6 +33,14 @@
         default(){
           return []
         }
+      }
+    },
+    methods: {
+      setClick(iid){
+        this.$store.commit('setClick',iid)
+      },
+      imgLoad(){
+        this.$bus.$emit('cartImgLoad')
       }
     }
   }
@@ -85,5 +94,12 @@
 .bottom{
   display: flex;
   justify-content: space-between;
+}
+.describe{
+  height: 30px;
+  line-height: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

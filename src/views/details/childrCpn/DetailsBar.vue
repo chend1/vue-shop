@@ -32,7 +32,8 @@
     name: 'DetailsBar',
     methods: {
       addClick(){
-        this.$emit('addClick')
+        this.$emit('addClick');
+        this.$store.dispatch('addClick')
       }
     }
   }
